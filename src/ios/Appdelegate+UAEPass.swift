@@ -58,30 +58,31 @@ import UAEPassClient
 
 open override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
     // Check if the user activity is a Universal Link
-    guard userActivity.activityType == NSUserActivityTypeBrowsingWeb else {
-        return false // Not a Universal Link, let other handlers process
-    }
+    // guard userActivity.activityType == NSUserActivityTypeBrowsingWeb else {
+    //     return false // Not a Universal Link, let other handlers process
+    // }
 
-    guard let url = userActivity.webpageURL else {
-        return false // No URL, can't handle
-    }
+    // guard let url = userActivity.webpageURL else {
+    //     return false // No URL, can't handle
+    // }
 
-    print("Universal Link URL: \(url)")
+    // print("Universal Link URL: \(url)")
 
     // Now handle your URL (e.g., check for your specific paths)
     let urlString = url.absoluteString
 
-    if urlString.contains(HandleURLScheme.externalURLSchemeSuccess()) {
-        if let topVC = UserInterfaceInfo.topViewController() as? UAEPassWebViewController {
-            topVC.forceReload()
+    if url.absoluteString.contains(HandleURLScheme.externalURLSchemeSuccess()) {
+        if let topViewController = UserInterfaceInfo.topViewController() {
+            if let webViewController = topViewController as? UAEPassWebViewController {
+                webViewController.forceReload()
+            }
         }
-        return true // We handled this URL
-    } else if urlString.contains(HandleURLScheme.externalURLSchemeFail()) {
-        if let topVC = UserInterfaceInfo.topViewController() as? UAEPassWebViewController {
-            topVC.foreceStop()
-            topVC.dismiss(animated: true)
-        }
-        return true // We handled this URL
+        return true
+    } else if url.absoluteString.contains(HandleURLScheme.externalURLSchemeFail()) {
+        guard let webViewController = UserInterfaceInfo.topViewController() as? UAEPassWebViewController  else { return false}
+        webViewController.foreceStop()
+        webViewController.dismiss(animated: true)
+        return false
     }
 
 
