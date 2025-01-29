@@ -56,7 +56,7 @@ import UAEPassClient
     
 // }
 
-func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+open override func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
     // Check if the user activity is a Universal Link
     guard userActivity.activityType == NSUserActivityTypeBrowsingWeb else {
         return false // Not a Universal Link, let other handlers process
