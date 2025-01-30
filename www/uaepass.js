@@ -24,6 +24,35 @@ document.addEventListener('deviceready', function() { // Wait for deviceready
 }, false);
 
 exports.init = function (success, error,environment,clientID,clientSecret,redirectUrl) {
+    this.bindEvents();
+    /**
+   * Bind Event Listeners
+   */
+      bindEvents: function() {
+        var _this = this;
+        document.addEventListener('deviceready', function() {
+          _this.onDeviceReady();
+        }, false);
+      },
+    
+      /**
+       *  deviceready Event Handler
+       */
+      onDeviceReady: function() {
+        var _this = this;
+        this.subscribe('didLaunchAppFromLink', function(event) {
+          _this.didLaunchAppFromLink(event);
+        });
+      },
+    
+      /**
+       *  store deeplink event
+       */
+      didLaunchAppFromLink: function(eventData) {
+        // this.dpLink = eventData;
+        console.log('Did launch application from the link: ' ,eventData)
+      },
+    
     exec(success, error, 'uaepass', 'initPlugin', [environment,clientID,clientSecret,redirectUrl]);
 };
 
