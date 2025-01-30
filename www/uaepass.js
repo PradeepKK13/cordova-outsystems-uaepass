@@ -24,7 +24,7 @@ var exec = require('cordova/exec');
 // }, false);
 
 exports.init = function (success, error,environment,clientID,clientSecret,redirectUrl) {
-    console.error('didLaunchAppFromLinkinit')
+    alert('didLaunchAppFromLinkinit')
     this.bindEvents();
     /**
    * Bind Event Listeners
@@ -32,7 +32,7 @@ exports.init = function (success, error,environment,clientID,clientSecret,redire
       bindEvents: function() {
         var _this = this;
         document.addEventListener('deviceready', function() {
-            console.error('didLaunchAppFromLinkReady')
+            alert('didLaunchAppFromLinkReady')
           _this.onDeviceReady();
         }, false);
       },
@@ -43,7 +43,7 @@ exports.init = function (success, error,environment,clientID,clientSecret,redire
       onDeviceReady: function() {
         var _this = this;
         this.subscribe('didLaunchAppFromLink', function(event) {
-            console.error('didLaunchAppFromLink')
+            alert('didLaunchAppFromLink', event)
           // _this.didLaunchAppFromLink(event);
         });
       }
