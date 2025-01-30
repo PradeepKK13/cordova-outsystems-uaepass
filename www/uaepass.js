@@ -24,13 +24,6 @@ var exec = require('cordova/exec');
 // }, false);
 
 exports.init = function (success, error,environment,clientID,clientSecret,redirectUrl) {
-    var channel = cordova.require("cordova/channel");
-    if (channel) {
-        channel.OSDeepLinksHandlerChannel.subscribe(function (url) {
-            alert(url);
-        });
-    }
-    
     exec(success, error, 'uaepass', 'initPlugin', [environment,clientID,clientSecret,redirectUrl]);
 };
 
