@@ -24,29 +24,12 @@ var exec = require('cordova/exec');
 // }, false);
 
 exports.init = function (success, error,environment,clientID,clientSecret,redirectUrl) {
-    alert('didLaunchAppFromLinkinit')
-    this.bindEvents();
-    /**
-   * Bind Event Listeners
-   */
-      bindEvents: function() {
-        var _this = this;
-        document.addEventListener('deviceready', function() {
-            alert('didLaunchAppFromLinkReady')
-          _this.onDeviceReady();
-        }, false);
-      },
-    
-      /**
-       *  deviceready Event Handler
-       */
-      onDeviceReady: function() {
-        var _this = this;
-        this.subscribe('didLaunchAppFromLink', function(event) {
-            alert('didLaunchAppFromLink', event)
-          // _this.didLaunchAppFromLink(event);
+    var channel = cordova.require("cordova/channel");
+    if (channel) {
+        channel.OSDeepLinksHandlerChannel.subscribe(function (url) {
+            alert(url);
         });
-      }
+    }
     
     exec(success, error, 'uaepass', 'initPlugin', [environment,clientID,clientSecret,redirectUrl]);
 };
